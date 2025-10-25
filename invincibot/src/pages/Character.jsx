@@ -65,10 +65,10 @@ export default function CharacterPage() {
                         alt={name}
                         className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                     />
-                    <ChatBubble onSend={handleSend} />
-                    <AttachFile onFileSelect={handleFileSelect} selectedFile={selectedFile} onClearFile={() => setSelectedFile(null)} />
+                    {/* <ChatBubble onSend={handleSend} />
+                    <AttachFile onFileSelect={handleFileSelect} selectedFile={selectedFile} onClearFile={() => setSelectedFile(null)} /> */}
                     {/* Wrapper for chat input with file button */}
-                    {/* <div className="relative flex-1 max-w-2xl">
+                    {/* <div className="relative flex-1 max-w-2xl"> */}
                         <AttachFile 
                             onFileSelect={handleFileSelect}
                             selectedFile={selectedFile}
@@ -79,7 +79,7 @@ export default function CharacterPage() {
                             selectedFile={selectedFile}
                             hasFile={!!selectedFile}
                         />
-                    </div> */}
+                    
                 </div>
                 </div>
 
