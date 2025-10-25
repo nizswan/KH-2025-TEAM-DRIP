@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Routes, Route, useNavigate } from "react-router-dom";
-import ChooseCharacter from "/pages/ChooseCharacter";
+import ChooseCharacter from "./pages/ChooseCharacter.jsx";
 import viteLogo from '/vite.svg'
-import './App.css'
+
 
 function App() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function App() {
             </div>
           }
         />
-        <Route path="/choose" element={<ChooseCharacter />} />
+        <Route path="/Choose" element={<ChooseCharacter />} />
       </Routes>
     </>
   );

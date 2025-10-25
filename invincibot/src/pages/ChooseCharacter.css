@@ -1,0 +1,8 @@
+.choose-character {
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center center;
+  background-image: url('../assets/Choose-Your-Character.jpg');
+  background-attachment: fixed;
+};
