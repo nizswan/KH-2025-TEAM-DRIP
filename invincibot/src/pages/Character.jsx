@@ -63,7 +63,7 @@ export default function CharacterPage() {
                 </div>
 
                 {/* working on return msg feature */}
-                <div className="overflow-hidden flex flex-col flex-1 w-full">
+                <div className="overflow-hidden flex flex-col-reverse flex-1 w-full">
                     <div className="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesEndRef}>
                         {messages.map((m) => (
                         <div key={m.id} className="flex justify-end" >
