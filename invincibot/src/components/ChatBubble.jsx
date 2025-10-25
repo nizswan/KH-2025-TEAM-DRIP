@@ -23,7 +23,7 @@ export default function ChatBubble({ onSend }) {
         <div className="w-screen">
             <form
                 onSubmit={handleSubmit}
-                className="flex mt-6 items-center me-14"
+                className="flex mt-6 items-center mr-14"
             >
                 <input 
                     type="text"

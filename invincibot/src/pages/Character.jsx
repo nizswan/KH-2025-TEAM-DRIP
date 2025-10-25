@@ -1,6 +1,8 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
 import {useState} from "react";
+import {useRef, useEffect} from "react";
+
 
 export default function CharacterPage() {
     const { name } = useParams();
@@ -19,6 +21,14 @@ export default function CharacterPage() {
     setMsg([...messages, { id: Date.now(), text: msg }]);
     };
 
+    const messagesEndRef = useRef(null);
+    useEffect (() => {
+        messagesEndRef.current?.scrollTo({
+            top: messagesEndRef.current.scrollHeight,
+            behavior: "smooth",
+        });
+    },[messages])
+
     return (
         <div
             className="h-screen w-full bg-cover bg-center text-white"
@@ -26,7 +36,6 @@ export default function CharacterPage() {
                 backgroundImage: `url(${background})`,
             }}
         >
-            {/* Black overlay */}
             <div className="absolute inset-0 bg-black/30"></div>
 
             <div>
@@ -43,32 +52,37 @@ export default function CharacterPage() {
                 </div>
             </div>
             {/* Content above overlay */}
-            <div className="relative flex flex-col justify-between h-full pt-6 text-white">
-                <div className="text-center items-center">
+            <div className="relative flex flex-col h-screen pt-6 text-white">
+                <div className="text-center shrink-0">
                     <h1 className="text-8xl font-bold font-title mb-3">
                         Invincibot
                     </h1>
-                    <p className="font-title text-3xl mb-90 font-light">
+                    <p className="font-title text-3xl mb-12 font-light">
                         Chat with {name} and {pronoun} allies to receive summaries of materials you share
                     </p>
                 </div>
-                <div className="flex flex-row ms-20 items-center space-x-14 mb-10">
-                    <img
-                        src={image}
-                        alt={name}
-                        className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-                    />
-                    <ChatBubble onSend={handleSend} />
-                </div>
-            </div>
 
-                {/* <div>
-                    {messages.map((m) => (
-                    <div key={m.id} className="bg-blue-600 text-white p-3 rounded-lg ml-auto">
-                        {m.text}
+                {/* working on return msg feature */}
+                <div className="overflow-hidden flex flex-col flex-1 w-full">
+                    <div className="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesEndRef}>
+                        {messages.map((m) => (
+                        <div key={m.id} className="flex justify-end" >
+                            <div className="bg-white w-3/4 text-black p-4 rounded self-end max-w-[65%]">{m.text} </div>
+                        </div>
+                        ))}
                     </div>
-                    ))}
-                </div> */}
+
+                    <div className="flex flex-row shrink-0 ms-20 items-center space-x-14 p-4">
+                        <img
+                            src={image}
+                            alt={name}
+                            className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
+                        />
+                        <ChatBubble onSend={handleSend} className="flex-1 ml-4" />
+                    </div>
+                </div>
+                
+            </div>
         </div>
     );
 }
