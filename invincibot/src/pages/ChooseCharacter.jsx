@@ -53,7 +53,7 @@ export default function ChooseCharacter() {
 
           <div className="carousel flex items-center justify-center gap-6">
             <button className="nav-btn text-4xl" onClick={prevCharacter}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="107" height="107" viewBox="0 0 107 107" fill="none" className="transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="107" height="107" viewBox="0 0 107 107" fill="none" className="cursor-pointer transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
                 <path d="M84.7084 53.5H22.2917M22.2917 53.5L53.5001 84.7083M22.2917 53.5L53.5001 22.2917" stroke="white" stroke-opacity="0.8" stroke-width="8.91667" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
@@ -89,7 +89,7 @@ export default function ChooseCharacter() {
             </div>
 
             <button className="nav-btn text-4xl" onClick={nextCharacter}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none" className="transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none" className=" cursor-pointer transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
                 <path d="M22.0833 53H83.9166M83.9166 53L52.9999 22.0833M83.9166 53L52.9999 83.9167" stroke="#F5F5F5" stroke-width="8.83333" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>

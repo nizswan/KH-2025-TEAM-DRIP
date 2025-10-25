@@ -1,4 +1,6 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import ChatBubble from "../components/ChatBubble";
+import {useState} from "react";
 
 export default function CharacterPage() {
     const { name } = useParams();
@@ -10,6 +12,11 @@ export default function CharacterPage() {
 
     const handleBack = () => {
         navigate('/ChooseCharacter');
+    };
+
+    const [messages, setMsg] = useState([]);
+    const handleSend = (msg) => {
+    setMsg([...messages, { id: Date.now(), text: msg }]);
     };
 
     return (
@@ -45,6 +52,18 @@ export default function CharacterPage() {
                         Chat with {name} and {pronoun} allies to receive summaries of materials you share
                     </p>
                 </div>
+            </div>
+            <div className="relative z-10 overflow-y-auto">
+                {/* renders it in parent component */}
+                
+                {/* <div>
+                    {messages.map((m) => (
+                    <div key={m.id} className="bg-blue-600 text-white p-3 rounded-lg ml-auto">
+                        {m.text}
+                    </div>
+                    ))}
+                </div> */}
+                <ChatBubble onSend={handleSend} />
             </div>
             <div className="absolute bottom-13 left-55 transform -translate-x-1/2 z-10">
               <img
