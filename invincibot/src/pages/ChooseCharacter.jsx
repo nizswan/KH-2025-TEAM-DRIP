@@ -13,13 +13,13 @@ export default function ChooseCharacter() {
 
   const characters = [
     { name: "Invincible", image: invincibleImg, pronoun: "his" },
-    { name: "Samantha", image: SamanthaImg, pronoun: "her" },
+    { name: "Atom Eve", image: SamanthaImg, pronoun: "her" },
     { name: "OmniMan", image: OmniManImg, pronoun: "his" },
   ];
 
   const characterBackground = [
     { name: "Invincible", image: invincibleImgBackground },
-    { name: "Samantha", image: SamanthaImgBackground },
+    { name: "Atom Eve", image: SamanthaImgBackground },
     { name: "OmniMan", image: OmniManImgBackground },
   ];
 
