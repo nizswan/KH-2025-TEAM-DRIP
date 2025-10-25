@@ -1,31 +1,39 @@
-import { useState } from 'react'
 import { Routes, Route, useNavigate } from "react-router-dom";
-import ChooseCharacter from "./pages/ChooseCharacter.jsx";
-import viteLogo from '/vite.svg'
-
+import ChooseCharacter from "/pages/ChooseCharacter";
+import './App.css'
 
 function App() {
   const navigate = useNavigate();
 
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="flex flex-col items-center justify-center h-screen text-center">
-              <h1 className="text-3xl font-bold mb-6">Welcome to Invincibot</h1>
-              <button
-                onClick={() => navigate("/choose")}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Choose Your Character
-              </button>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="relative h-screen w-full bg-[url('assets/img/landingpage-bg.jpg')] bg-cover bg-center">
+              {/* Black overlay */}
+              <div className="absolute inset-0 bg-black/30"></div>
+
+              {/* Content above overlay */}
+              <div className="relative flex flex-col items-center justify-start h-full pt-6 text-center text-white">
+                <h1 className="text-8xl font-bold font-title mb-3">
+                 Invincibot
+                </h1>
+                <p className="font-title text-3xl mb-90 font-light">AI summarizer for text, audio, and text to speech use</p>
+                <button
+                  onClick={() => navigate("/choosecharacter")}
+                  className="cursor-pointer bg-blue-500 text-yellow-200 text-xl px-6 py-2 rounded hover:bg-blue-600 hover:shadow-[0_0_30px_10px_#3b82f6] transition-shadow duration-300"
+                >
+                  Let's Get Started
+                </button>
+              </div>
             </div>
-          }
-        />
-        <Route path="/Choose" element={<ChooseCharacter />} />
-      </Routes>
+            }
+          />
+          <Route path="/choosecharacter" element={<ChooseCharacter />} />
+        </Routes>
+
     </>
   );
 }

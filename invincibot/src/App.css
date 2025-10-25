@@ -1,20 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
-/* Invicibot Title CSS */
-.title {
-    color: #FFF;
-    font-family: "Chakra Petch";
-    font-size: 140px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-.subtitle {
-    color: #FFF;
-    text-align: center;
-    font-family: "Chakra Petch";
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+@theme {
+  --font-title: "Chakra Petch", serif;
 }
