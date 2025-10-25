@@ -1,4 +1,4 @@
-# Knight Hacks 2025 Team DRIP Submission -- AI Web App Sumarizer
+# Knight Hacks 2025 Team DRIP Submission -- Invincible AI Web App Sumarizer
 
 Incorporates Elevenlabs, Facebook BERT Model, Google Gemini API, and Google Cloud Gemini A2A Agent Developer Kit to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
 
