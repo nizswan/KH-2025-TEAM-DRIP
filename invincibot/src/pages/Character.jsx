@@ -17,6 +17,9 @@ export default function CharacterPage() {
         navigate('/ChooseCharacter');
     };
 
+    const handleClearFile = () => {
+    setSelectedFile(null);
+};
     const [messages, setMsg] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -85,11 +88,21 @@ export default function CharacterPage() {
                             alt={name}
                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                         />
-                        <ChatBubble onSend={handleSend} className="flex-1 ml-4" />
+                        
+                            <AttachFile
+                                onFileSelect={handleFileSelect}
+                                selectedFile={selectedFile}
+                                onClearFile={handleClearFile}
+                            />
+                            <ChatBubble
+                                onSend={handleSend}
+                                selectedFile={selectedFile}
+                                onClearFile={handleClearFile}
+                            />
+                        </div>
                     </div>
                 </div>
                 
             </div>
-        </div>
     );
 }
