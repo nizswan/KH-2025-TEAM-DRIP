@@ -6,6 +6,7 @@ export default function CharacterPage() {
     const navigate = useNavigate();
     const background = location.state?.background;
     const pronoun = location.state?.pronoun;
+    const image = location.state?.image;
 
     const handleBack = () => {
         navigate('/ChooseCharacter');
@@ -44,6 +45,13 @@ export default function CharacterPage() {
                         Chat with {name} and {pronoun} allies to receive summaries of materials you share
                     </p>
                 </div>
+            </div>
+            <div className="absolute bottom-13 left-55 transform -translate-x-1/2 z-10">
+              <img
+                src={image}
+                alt={name}
+                className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
+              />
             </div>
         </div>
     );

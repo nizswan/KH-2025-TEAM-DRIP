@@ -35,7 +35,7 @@ export default function ChooseCharacter() {
 
   const handleChoose = (character) => {
     const selectedBackground = characterBackground.find(bg => bg.name === character.name);
-    navigate(`/character/${character.name}`, { state: { background: selectedBackground.image, pronoun: character.pronoun } });
+    navigate(`/character/${character.name}`, { state: { background: selectedBackground.image, pronoun: character.pronoun, image: character.image } });
   };
 
   return (
