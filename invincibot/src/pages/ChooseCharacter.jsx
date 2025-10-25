@@ -12,9 +12,9 @@ export default function ChooseCharacter() {
   const navigate = useNavigate();
 
   const characters = [
-    { name: "Invincible", image: invincibleImg, pronoun: "his" },
-    { name: "Atom Eve", image: SamanthaImg, pronoun: "her" },
-    { name: "OmniMan", image: OmniManImg, pronoun: "his" },
+    { name: "Invincible", image: invincibleImg, pronoun: "his", styleClass: "invincible-glow"},
+    { name: "Atom Eve", image: SamanthaImg, pronoun: "her", styleClass: "atom-eve-glow"},
+    { name: "OmniMan", image: OmniManImg, pronoun: "his", styleClass: "omniman-glow" },
   ];
 
   const characterBackground = [
@@ -54,7 +54,7 @@ export default function ChooseCharacter() {
 
           <div className="carousel flex items-center justify-center gap-6">
             <button className="nav-btn text-4xl" onClick={prevCharacter}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="107" height="107" viewBox="0 0 107 107" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="107" height="107" viewBox="0 0 107 107" fill="none" className="transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
                 <path d="M84.7084 53.5H22.2917M22.2917 53.5L53.5001 84.7083M22.2917 53.5L53.5001 22.2917" stroke="white" stroke-opacity="0.8" stroke-width="8.91667" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
@@ -75,7 +75,9 @@ export default function ChooseCharacter() {
                 alt={currentCharacter.name}
                 className="w-48 h-48 rounded-full border-4 border-white shadow-2xl object-cover "
               />
-              <h2 className="character mt-4">{currentCharacter.name}</h2>
+              <h2 className={`character mt-4 ${currentCharacter.styleClass}`}>
+                {currentCharacter.name}
+              </h2>
             </div>
 
             {/* Right Character */}
@@ -88,7 +90,7 @@ export default function ChooseCharacter() {
             </div>
 
             <button className="nav-btn text-4xl" onClick={nextCharacter}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none" className="transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]">
                 <path d="M22.0833 53H83.9166M83.9166 53L52.9999 22.0833M83.9166 53L52.9999 83.9167" stroke="#F5F5F5" stroke-width="8.83333" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
