@@ -43,8 +43,8 @@ export default function CharacterPage() {
                 </div>
             </div>
             {/* Content above overlay */}
-            <div className="relative flex flex-col items-center justify-between h-full pt-6 text-center text-white">
-                <div>
+            <div className="relative flex flex-col justify-between h-full pt-6 text-white">
+                <div className="text-center items-center">
                     <h1 className="text-8xl font-bold font-title mb-3">
                         Invincibot
                     </h1>
@@ -52,10 +52,16 @@ export default function CharacterPage() {
                         Chat with {name} and {pronoun} allies to receive summaries of materials you share
                     </p>
                 </div>
+                <div className="flex flex-row ms-20 items-center space-x-14 mb-10">
+                    <img
+                        src={image}
+                        alt={name}
+                        className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
+                    />
+                    <ChatBubble onSend={handleSend} />
+                </div>
             </div>
-            <div className="relative z-10 overflow-y-auto">
-                {/* renders it in parent component */}
-                
+
                 {/* <div>
                     {messages.map((m) => (
                     <div key={m.id} className="bg-blue-600 text-white p-3 rounded-lg ml-auto">
@@ -63,15 +69,6 @@ export default function CharacterPage() {
                     </div>
                     ))}
                 </div> */}
-                <ChatBubble onSend={handleSend} />
-            </div>
-            <div className="absolute bottom-13 left-55 transform -translate-x-1/2 z-10">
-              <img
-                src={image}
-                alt={name}
-                className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-              />
-            </div>
         </div>
     );
 }

@@ -20,17 +20,17 @@ export default function ChatBubble({ onSend }) {
     };
 
     return (
-        <div className="h-screen flex flex-col justify-end w-screen">
+        <div className="w-screen">
             <form
                 onSubmit={handleSubmit}
-                className="flex justify-end items-center p-3 me-14 mb-24"
+                className="flex mt-6 items-center me-14"
             >
                 <input 
                     type="text"
                     value={message}
                     onChange={(e) => setMsg(e.target.value)}
                     placeholder="Enter here"
-                    className="bg-white w-3/4 text-black placeholder-red-500 px-4 py-10 rounded"  
+                    className="bg-white w-3/4 text-black placeholder-red-500 px-4 py-6 rounded"  
                 />
             </form>
         </div>
