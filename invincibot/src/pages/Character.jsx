@@ -1,4 +1,3 @@
-
 import { useLocation, useParams } from "react-router-dom";
 
 export default function CharacterPage() {
