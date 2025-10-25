@@ -1,5 +1,6 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
+import AttachFile from "../components/AttachFile";
 import {useState} from "react";
 import {useRef, useEffect} from "react";
 
@@ -16,9 +17,18 @@ export default function CharacterPage() {
         navigate('/ChooseCharacter');
     };
 
+    const handleClearFile = () => {
+    setSelectedFile(null);
+};
     const [messages, setMsg] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const handleSend = (msg) => {
     setMsg([...messages, { id: Date.now(), text: msg }]);
+    };
+
+    const handleFileSelect = (file) => {
+        setSelectedFile(file);
     };
 
     const messagesEndRef = useRef(null);
@@ -78,11 +88,21 @@ export default function CharacterPage() {
                             alt={name}
                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                         />
-                        <ChatBubble onSend={handleSend} className="flex-1 ml-4" />
+                        
+                            <AttachFile
+                                onFileSelect={handleFileSelect}
+                                selectedFile={selectedFile}
+                                onClearFile={handleClearFile}
+                            />
+                            <ChatBubble
+                                onSend={handleSend}
+                                selectedFile={selectedFile}
+                                onClearFile={handleClearFile}
+                            />
+                        </div>
                     </div>
                 </div>
                 
             </div>
-        </div>
     );
 }
