@@ -6,7 +6,6 @@ import OmniManImg from "../assets/img/OmniMan.png";
 import invincibleImgBackground from "../assets/img/InvincibleBackground.png";
 import SamanthaImgBackground from "../assets/img/SamanthaBackground.png";
 import OmniManImgBackground from "../assets/img/OmniManBackground.png";
-import Character from "../pages/Character";
 
 export default function ChooseCharacter() {
   const navigate = useNavigate();
