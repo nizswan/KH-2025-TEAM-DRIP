@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import ChooseCharacter from "/pages/ChooseCharacter";
+import ChooseCharacter from "./pages/ChooseCharacter";
 import './App.css'
 
 function App() {

@@ -4,3 +4,9 @@
 @theme {
   --font-title: "Chakra Petch", serif;
 }
+
+.character {
+  @apply font-title text-3xl mb-10 font-light underline text-white rounded transition-shadow duration-300;
+  /* Custom shadow */
+  text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+}
