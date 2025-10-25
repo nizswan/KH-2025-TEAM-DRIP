@@ -1,5 +1,6 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
+import AttachFile from "../components/AttachFile";
 import {useState} from "react";
 
 export default function CharacterPage() {
@@ -15,8 +16,14 @@ export default function CharacterPage() {
     };
 
     const [messages, setMsg] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const handleSend = (msg) => {
     setMsg([...messages, { id: Date.now(), text: msg }]);
+    };
+
+    const handleFileSelect = (file) => {
+        setSelectedFile(file);
     };
 
     return (
@@ -59,8 +66,22 @@ export default function CharacterPage() {
                         className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                     />
                     <ChatBubble onSend={handleSend} />
+                    <AttachFile onFileSelect={handleFileSelect} selectedFile={selectedFile} onClearFile={() => setSelectedFile(null)} />
+                    {/* Wrapper for chat input with file button */}
+                    {/* <div className="relative flex-1 max-w-2xl">
+                        <AttachFile 
+                            onFileSelect={handleFileSelect}
+                            selectedFile={selectedFile}
+                            onClearFile={() => setSelectedFile(null)}
+                        />
+                        <ChatBubble 
+                            onSend={handleSend}
+                            selectedFile={selectedFile}
+                            hasFile={!!selectedFile}
+                        />
+                    </div> */}
                 </div>
-            </div>
+                </div>
 
                 {/* <div>
                     {messages.map((m) => (
