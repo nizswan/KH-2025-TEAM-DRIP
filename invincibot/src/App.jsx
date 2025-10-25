@@ -1,5 +1,6 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ChooseCharacter from "./pages/ChooseCharacter";
+import Character from "./pages/Character";
 import './App.css'
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             }
           />
           <Route path="/choosecharacter" element={<ChooseCharacter />} />
+          <Route path="/character/:name" element={<Character />} />
         </Routes>
 
     </>
