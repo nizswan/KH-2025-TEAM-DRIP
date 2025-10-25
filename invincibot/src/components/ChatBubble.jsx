@@ -8,13 +8,39 @@ export default function ChatBubble({ onSend, selectedFile, onClearFile }) {
         console.log(messages);
     }, [messages])
 
-    const handleSubmit = (e) => {
+    const readFileContent = async (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = (e) => reject(e);
+            reader.readAsText(file);
+        });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        let fileContent = "";
+
+        // Read file content if there's a selected file
+        if (selectedFile) {
+            try {
+                fileContent = await readFileContent(selectedFile);
+                console.log("File content:", fileContent);
+            } catch (error) {
+                console.error("Error reading file:", error);
+            }
+        }
 
         if (message.trim() || selectedFile) {
             const trimmed = message.trim();
-            onSend(trimmed);
-            setMessages([...messages, trimmed]);
+
+            const fullMessage = selectedFile
+                ? `${trimmed}\n\n--- File Content (${selectedFile.name}) ---\n${fileContent}`
+                : trimmed;
+
+            onSend(fullMessage);
+            setMessages([...messages, fullMessage]);
             setMsg("");
         }
     };
