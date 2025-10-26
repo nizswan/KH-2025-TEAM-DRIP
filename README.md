@@ -1,17 +1,17 @@
-# Knight Hacks 2025 Team DRIP Submission -- Invincible AI Web App Sumarizer
+# Knight Hacks 2025 Team DRIP Submission -- Invincibot AI Web App Sumarizer
 
-Incorporates Elevenlabs, Facebook BART Model, and Google Gemini API to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
+Incorporates Elevenlabs, Facebook BART Model, Google Gemini API, and ReactJS to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
 
-This application is inspired by the television series "Invincible" where the three bots that you can converse with are Mark (Invincible), Atom Eve, and Omniman. Users can decide which character to chat with depending on their purposes.
+This application is inspired by the television series "Invincible" where the three bots that you can converse with are Mark (Invincible), Atom Eve, and Omni-Man. Users can decide which character to chat with depending on their preference.
 
-The chat's are not designed to answer questions, but rather to summarize text and audio quickly.
+The chat's are not designed to answer questions, but rather to summarize text and audio quickly. They perform both text-to-speech and speech-to-text operations.
 
-We use elevenlabs text to speech api, with three unique voices.
+We use ElevenLabs text-to-speech api, trained on three voices from the TV series.
 
-For audio usage we first use elevenlabs speech to text translator -> pass it through summarizer system -> output in both texts and desired character speech.
+For audio usage we first use ElevenLabs speech to text translator -> pass it through summarizer system -> output in both texts and desired character speech.
 
 Summarizer System:
-We use Facebook's BART Summarizer as our default summarizer, after computing a few ablation studies with alternative large language models evaluating on the dataset CNN. The BART model tended to perform nearly the best, and it was selected as it was the most optimal model in terms of local model usage. The BERT model summarizes all inputs to a pretty similar range of outputs regardless of input size, so we use agent to agent protocols to speak with google gemini to tell the BERT model what it missed out on the first batch of summarization. Since our application mimicks messages, we decide to send each subset of the summary in the intervals they are processed by the Summarizer System.
+We use Facebook's BART Summarizer as our default summarizer, after computing a few ablation studies with alternative large language models evaluating on the dataset CNN. The BART model tended to perform nearly the best, and it was selected as it was the most optimal model in terms of local model usage. The BART model summarizes all inputs to a pretty similar range of outputs regardless of input size, so we use direct input to speak with Google Gemini to tell the BART model what it missed out on the first batch of summarization. Since our application mimicks messages, we decide to send each subset of the summary in the intervals they are processed by the Summarizer System.
 
 The particular algorithm for deciding whether a summary is sufficient or not is based on the following heuristic we decided:
 
