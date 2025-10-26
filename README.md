@@ -27,9 +27,14 @@ We also allow a bit of freeway so we allow a difference of up to 5% and use the 
 
 if f(x) > [len(summary)/x] - 0.05:
   pass to google gemini model to figure out what is missed in summarization
+
+  
 else:
   finish algorithm
 
 For more than 1 iterations of passing to Google Gemini, len(summary) = len(summary_1) + len(summary_2) + ... + len(summary_n).
 
 For each summary_i, in the user interface we print a text message and allow the option for voice playback from the character.
+
+<img width="1125" height="1400" alt="algorithm" src="https://github.com/user-attachments/assets/1d9fb7c3-557b-4991-a860-d74ff86120a9" />
+
