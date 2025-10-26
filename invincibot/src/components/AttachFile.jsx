@@ -12,7 +12,6 @@ export default function AttachFile({ onFileSelect, selectedFile, onClearFile }) 
         event.target.value = '';
     };
 
-
     return (
         <div className="mt-8">
             <input
@@ -20,7 +19,7 @@ export default function AttachFile({ onFileSelect, selectedFile, onClearFile }) 
                 id="file-upload"
                 onChange={handleFileChange}
                 className="hidden"
-                accept=".txt"
+                accept=".txt, .mp3, .wav"
             />
             <label
                 htmlFor="file-upload"
