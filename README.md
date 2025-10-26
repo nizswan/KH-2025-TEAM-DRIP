@@ -1,6 +1,6 @@
 # Knight Hacks 2025 Team DRIP Submission -- Invincible AI Web App Sumarizer
 
-Incorporates Elevenlabs, Facebook BART Model, Google Gemini API, and Google Cloud Gemini A2A Agent Developer Kit to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
+Incorporates Elevenlabs, Facebook BART Model, and Google Gemini API to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
 
 This application is inspired by the television series "Invincible" where the three bots that you can converse with are Mark (Invincible), Atom Eve, and Omniman. Users can decide which character to chat with depending on their purposes.
 
