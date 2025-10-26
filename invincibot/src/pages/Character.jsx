@@ -2,7 +2,7 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
 import AttachFile from "../components/AttachFile";
 import Audio from "../components/Audio";
-// import Send from "../components/Send";
+import Send from "../components/Send";
 import { useState } from "react";
 import { useRef, useEffect } from "react";
 import { summarizeText, summarizeAudio, summarizeTextProgressive, streamTextProgressive, tts as synthesizeTTS} from "../lib/api";
@@ -222,6 +222,7 @@ export default function CharacterPage() {
                                 onClearFile={handleClearFile}
                             />
                             <Audio />
+                            <Send/>
                         </div>
 
                         <ChatBubble
