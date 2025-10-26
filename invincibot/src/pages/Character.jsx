@@ -29,6 +29,13 @@ export default function CharacterPage() {
     const VOICE_BY_CHAR = { "Invincible": "mark", "Atom Eve": "eve", "OmniMan": "omni" };
     const voice = VOICE_BY_CHAR[name] ?? "mark";
 
+    const BUBBLE_BY_CHAR = {
+    "Invincible": "bg-blue-500",   // Mark
+    "Atom Eve":   "bg-pink-500",   // Eve
+    "OmniMan":    "bg-red-500",    // Omni-Man
+    };
+    const botBubbleClass = `${BUBBLE_BY_CHAR[name] ?? "bg-slate-600"} text-white`;
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const speakChainRef = useRef(Promise.resolve());
@@ -61,7 +68,7 @@ export default function CharacterPage() {
     const ftype = f?.type || "";
     const isAudio = f && ftype.startsWith("audio/");
     if (msg && !isAudio && !looksBinaryish(msg)) {
-        setMsg((curr) => [...curr, { id: Date.now(), text: msg }]);
+        setMsg((curr) => [...curr, { id: Date.now(), text: msg,  from: "user"}]);
     }
 
     (async () => {
@@ -89,7 +96,7 @@ export default function CharacterPage() {
                 if (evt.type === "part") {
                     const idBase = Date.now();
                     const part = evt.text || "";
-                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part, from: "bot" }]);
                     speak(part); // <- speak each bot chunk
                 } else if (evt.type === "error") {
                     throw new Error(evt.message || "stream error");
@@ -103,7 +110,7 @@ export default function CharacterPage() {
                 if (parts) {
                 for (let i = 0; i < parts.length; i++) {
                     const part = parts[i] || "";
-                    setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part }]);
+                    setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part, from: "bot" }]);
                     speak(part);
                 }
                 } else {
@@ -117,9 +124,9 @@ export default function CharacterPage() {
 
                 const transcript = (stt?.transcript || "").trim();
                 if (transcript) {
-                setMsg((curr) => [...curr, { id: Date.now() + 1, text: transcript }]);
+                setMsg((curr) => [...curr, { id: Date.now() + 1, text: transcript, from: "user" }]);
                 } else {
-                setMsg((curr) => [...curr, { id: Date.now() + 2, text: "(No transcript detected)" }]);
+                setMsg((curr) => [...curr, { id: Date.now() + 2, text: "(No transcript detected)", from: "bot" }]);
                 return;
                 }
 
@@ -135,7 +142,7 @@ export default function CharacterPage() {
                     const idBase = Date.now();
                     const part = evt.text || "";
                     if (!part) continue;
-                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part, from: "bot" }]);
                     speak(part);
                     } else if (evt.type === "error") {
                     throw new Error(evt.message || "stream error");
@@ -153,12 +160,12 @@ export default function CharacterPage() {
                 if (parts) {
                     for (let i = 0; i < parts.length; i++) {
                     const part = parts[i] || "";
-                    setMsg((curr) => [...curr, { id: Date.now() + i + 100, text: part }]);
+                    setMsg((curr) => [...curr, { id: Date.now() + i + 100, text: part, from: "bot" }]);
                     speak(part);
                     }
                 } else {
                     const botText = res2?.final_text || "(No summary produced)";
-                    setMsg((curr) => [...curr, { id: Date.now() + 101, text: botText }]);
+                    setMsg((curr) => [...curr, { id: Date.now() + 101, text: botText, from: "bot" }]);
                     speak(botText);
                 }
                 }
@@ -175,7 +182,7 @@ export default function CharacterPage() {
                 if (evt.type === "part") {
                 const idBase = Date.now();
                 const part = evt.text || "";
-                setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                setMsg((curr) => [...curr, { id: idBase + (++i), text: part, from: "bot" }]);
                 speak(part);
                 } else if (evt.type === "error") {
                 throw new Error(evt.message || "stream error");
@@ -187,12 +194,12 @@ export default function CharacterPage() {
             if (parts) {
                 for (let i = 0; i < parts.length; i++) {
                 const part = parts[i] || "";
-                setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part }]);
+                setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part, from: "bot" }]);
                 speak(part);
                 }
             } else {
                 const botText = res?.final_text || "(No summary produced)";
-                setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText }]);
+                setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText, from: "bot" }]);
                 speak(botText);
             }
             }
@@ -200,7 +207,7 @@ export default function CharacterPage() {
 
         } catch (e) {
         setError(e?.message || "Failed to fetch");
-        setMsg((curr) => [...curr, { id: Date.now() + 2, text: "Error: request failed." }]);
+        setMsg((curr) => [...curr, { id: Date.now() + 2, text: "Error: request failed.", from: "bot" }]);
         } finally {
         setIsLoading(false);
         setSelectedFile(null);
@@ -258,12 +265,24 @@ export default function CharacterPage() {
                 {/* working on return msg feature */}
                 <div className="overflow-hidden flex flex-col-reverse flex-1 w-full">
                     <div className="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesEndRef}>
-                        {messages.map((m) => (
-                            <div key={m.id} className="flex justify-end" >
-                                <div className="bg-white w-3/4 text-black p-4 rounded self-end max-w-[65%]">{m.text} </div>
-                            </div>
-                        ))}
-                    </div>
+                        {messages.map((m) => {
+                            const isBot = m.from === "bot";
+                            return (
+                                <div
+                                key={m.id}
+                                className={`flex ${isBot ? "justify-start" : "justify-end"}`}
+                                >
+                                <div
+                                    className={`${
+                                    isBot ? botBubbleClass : "bg-white text-black"
+                                    } w-3/4 p-4 rounded-2xl max-w-[65%] whitespace-pre-wrap break-words shadow-md`}
+                                >
+                                    {m.text}
+                                </div>
+                                </div>
+                            );
+                        })}
+                                                </div>
 
                     <div className="flex flex-row shrink-0 ms-20 items-center space-x-14 p-4">
                         <img
