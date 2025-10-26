@@ -17,7 +17,7 @@ export default function AudioPlayer() {
             />
             <button
                 type="button"
-                onClick={() => document.getElementById('file-upload').click()}
+                onClick={() => document.getElementById().click()}
                 className="cursor-pointer inline-block transition-all duration-300 hover:drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 80 80" fill="none">
