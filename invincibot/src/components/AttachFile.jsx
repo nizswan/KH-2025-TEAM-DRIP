@@ -24,7 +24,7 @@ export default function AttachFile({ onFileSelect, selectedFile, onClearFile }) 
             />
             <label
                 htmlFor="file-upload"
-                className="absolute right-125 transform-x-10 -translate-y-1/2 z-10 cursor-pointer inline-block transition-all duration-300 hover:drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
+                className="cursor-pointer inline-block transition-all duration-300 hover:drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 80 80" fill="none">
                     <circle cx="40" cy="40" r="40" fill="black" />
