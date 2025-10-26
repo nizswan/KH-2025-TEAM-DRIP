@@ -1,0 +1,1 @@
+this is a shorter test to see if the model is capable of comprehending text messages

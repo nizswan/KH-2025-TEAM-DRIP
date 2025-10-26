@@ -4,6 +4,9 @@ import AttachFile from "../components/AttachFile";
 import Audio from "../components/Audio";
 import { useState } from "react";
 import { useRef, useEffect } from "react";
+import {useState} from "react";
+import {useRef, useEffect} from "react";
+import { summarizeText, summarizeAudio, summarizeTextProgressive, streamTextProgressive, tts as synthesizeTTS} from "../lib/api";
 
 
 export default function CharacterPage() {
@@ -24,9 +27,133 @@ export default function CharacterPage() {
     const [messages, setMsg] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleSend = (msg) => {
-        setMsg([...messages, { id: Date.now(), text: msg }]);
+    const VOICE_BY_CHAR = { "Invincible": "mark", "Atom Eve": "eve", "OmniMan": "omni" };
+    const voice = VOICE_BY_CHAR[name] ?? "mark";
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    let speakChain = Promise.resolve();
+    const speak = (text) => {
+    if (!text) return;
+    speakChain = speakChain.then(async () => {
+        try {
+        const url = await synthesizeTTS({ text, voice });
+        await new Promise((resolve) => {
+            const audio = new Audio(url);
+            audio.onended = resolve;
+            audio.onerror = resolve;
+            audio.play().catch(resolve);
+        });
+        } catch (_) {
+        }
+    });
     };
+
+    const handleSend = (msg) => {
+    setMsg([...messages, { id: Date.now(), text: msg }]); // user message (no TTS)
+
+    (async () => {
+        try {
+        setIsLoading(true);
+        setError(null);
+
+        if (selectedFile) {
+            const f = selectedFile;
+            const fname = f?.name || "";
+            const type = f?.type || "";
+            const looksText = type.startsWith("text/") || /\.txt$/i.test(fname);
+
+            if (looksText) {
+            const fileText = await f.text();
+
+            try {
+                let i = 0;
+                for await (const evt of streamTextProgressive({
+                text: fileText,
+                voice,
+                max_iters: 5,
+                tolerance: 0.05,
+                })) {
+                if (evt.type === "part") {
+                    const idBase = Date.now();
+                    const part = evt.text || "";
+                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                    speak(part); // <- speak each bot chunk
+                } else if (evt.type === "error") {
+                    throw new Error(evt.message || "stream error");
+                }
+                }
+            } catch (e) {
+                const res = await summarizeTextProgressive({
+                text: fileText, voice, max_iters: 5, tts: false
+                });
+                const parts = Array.isArray(res?.parts) && res.parts.length ? res.parts : null;
+                if (parts) {
+                for (let i = 0; i < parts.length; i++) {
+                    const part = parts[i] || "";
+                    setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part }]);
+                    speak(part);
+                }
+                } else {
+                const botText = res?.final_text || "(No summary produced)";
+                setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText }]);
+                speak(botText);
+                }
+            }
+            } else {
+            const res = await summarizeAudio(f, { voice, tts: false });
+            const botText = res?.summary || res?.transcript || "(No summary produced)";
+            setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText }]);
+            speak(botText);
+            }
+        } else {
+            // Plain text progressive (stream first, fallback to JSON)
+            try {
+            let i = 0;
+            for await (const evt of streamTextProgressive({
+                text: msg,
+                voice,
+                max_iters: 5,
+                tolerance: 0.05,
+            })) {
+                if (evt.type === "part") {
+                const idBase = Date.now();
+                const part = evt.text || "";
+                setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                speak(part);
+                } else if (evt.type === "error") {
+                throw new Error(evt.message || "stream error");
+                }
+            }
+            } catch (e) {
+            const res = await summarizeTextProgressive({ text: msg, voice, max_iters: 5, tts: false });
+            const parts = Array.isArray(res?.parts) && res.parts.length ? res.parts : null;
+            if (parts) {
+                for (let i = 0; i < parts.length; i++) {
+                const part = parts[i] || "";
+                setMsg((curr) => [...curr, { id: Date.now() + i + 1, text: part }]);
+                speak(part);
+                }
+            } else {
+                const botText = res?.final_text || "(No summary produced)";
+                setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText }]);
+                speak(botText);
+            }
+            }
+        }
+
+        } catch (e) {
+        setError(e?.message || "Failed to fetch");
+        setMsg((curr) => [...curr, { id: Date.now() + 2, text: "Error: request failed." }]);
+        } finally {
+        setIsLoading(false);
+        setSelectedFile(null);
+        }
+    })();
+    };
+
+
 
     const handleFileSelect = (file) => {
         setSelectedFile(file);

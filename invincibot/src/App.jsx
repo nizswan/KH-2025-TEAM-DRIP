@@ -1,6 +1,7 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ChooseCharacter from "./pages/ChooseCharacter";
 import Character from "./pages/Character";
+import Summarizer from "./pages/Summarizer";
 import './App.css'
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
               <div className="relative h-screen w-full bg-[url('assets/img/landingpage-bg.jpg')] bg-cover bg-center">
                 
               <div className="absolute inset-0 bg-black/30"></div>
-
+              
               <div className="relative flex flex-col items-center justify-start h-full pt-6 text-center text-white">
                 <h1 className="text-8xl font-bold font-title mb-3">
                  Invincibot
@@ -33,6 +34,7 @@ function App() {
           />
           <Route path="/choosecharacter" element={<ChooseCharacter />} />
           <Route path="/character/:name" element={<Character />} />
+          <Route path="/summarizer" element={<Summarizer />} />  {/* ADD */}
         </Routes>
 
     </>
