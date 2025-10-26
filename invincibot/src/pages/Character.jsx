@@ -214,17 +214,20 @@ export default function CharacterPage() {
                             alt={name}
                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                         />
-                        <AttachFile
-                            onFileSelect={handleFileSelect}
-                            selectedFile={selectedFile}
-                            onClearFile={handleClearFile}
-                        />
+                        <div className="flex items-center space-x-4">
+                            <AttachFile
+                                onFileSelect={handleFileSelect}
+                                selectedFile={selectedFile}
+                                onClearFile={handleClearFile}
+                            />
+                            <Audio />
+                        </div>
+
                         <ChatBubble
                             onSend={handleSend}
                             selectedFile={selectedFile}
                             onClearFile={handleClearFile}
                         />
-                        <Audio />
                     </div>
                 </div>
             </div>
