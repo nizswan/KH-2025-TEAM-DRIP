@@ -31,15 +31,15 @@ export default function CharacterPage() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const speakChainRef = useRef(Promise.resolve());
 
-    let speakChain = Promise.resolve();
     const speak = (text) => {
     if (!text) return;
-    speakChain = speakChain.then(async () => {
+    speakChainRef.current = speakChainRef.current.then(async () => {
         try {
         const url = await synthesizeTTS({ text, voice });
         await new Promise((resolve) => {
-            const audio = new Audio(url);
+            const audio = new window.Audio(url);
             audio.onended = resolve;
             audio.onerror = resolve;
             audio.play().catch(resolve);
@@ -49,8 +49,20 @@ export default function CharacterPage() {
     });
     };
 
+    const looksBinaryish = (s) => {
+    if (!s || typeof s !== "string") return false;
+    if (s.includes("\uFFFD")) return true;
+    const ctrl = s.match(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g);
+    return ctrl && ctrl.length > 8;
+    };
+
     const handleSend = (msg) => {
-    setMsg([...messages, { id: Date.now(), text: msg }]); // user message (no TTS)
+    const f = selectedFile;
+    const ftype = f?.type || "";
+    const isAudio = f && ftype.startsWith("audio/");
+    if (msg && !isAudio && !looksBinaryish(msg)) {
+        setMsg((curr) => [...curr, { id: Date.now(), text: msg }]);
+    }
 
     (async () => {
         try {
@@ -101,13 +113,57 @@ export default function CharacterPage() {
                 }
             }
             } else {
-            const res = await summarizeAudio(f, { voice, tts: false });
-            const botText = res?.summary || res?.transcript || "(No summary produced)";
-            setMsg((curr) => [...curr, { id: Date.now() + 1, text: botText }]);
-            speak(botText);
+                const stt = await summarizeAudio(f, { voice, tts: false });
+
+                const transcript = (stt?.transcript || "").trim();
+                if (transcript) {
+                setMsg((curr) => [...curr, { id: Date.now() + 1, text: transcript }]);
+                } else {
+                setMsg((curr) => [...curr, { id: Date.now() + 2, text: "(No transcript detected)" }]);
+                return;
+                }
+
+                try {
+                let i = 0;
+                for await (const evt of streamTextProgressive({
+                    text: transcript,
+                    voice,
+                    max_iters: 5,
+                    tolerance: 0.05,
+                })) {
+                    if (evt.type === "part") {
+                    const idBase = Date.now();
+                    const part = evt.text || "";
+                    if (!part) continue;
+                    setMsg((curr) => [...curr, { id: idBase + (++i), text: part }]);
+                    speak(part);
+                    } else if (evt.type === "error") {
+                    throw new Error(evt.message || "stream error");
+                    }
+
+                }
+                } catch (e) {
+                const res2 = await summarizeTextProgressive({
+                    text: transcript,
+                    voice,
+                    max_iters: 5,
+                    tts: false,
+                });
+                const parts = Array.isArray(res2?.parts) && res2.parts.length ? res2.parts : null;
+                if (parts) {
+                    for (let i = 0; i < parts.length; i++) {
+                    const part = parts[i] || "";
+                    setMsg((curr) => [...curr, { id: Date.now() + i + 100, text: part }]);
+                    speak(part);
+                    }
+                } else {
+                    const botText = res2?.final_text || "(No summary produced)";
+                    setMsg((curr) => [...curr, { id: Date.now() + 101, text: botText }]);
+                    speak(botText);
+                }
+                }
             }
         } else {
-            // Plain text progressive (stream first, fallback to JSON)
             try {
             let i = 0;
             for await (const evt of streamTextProgressive({
