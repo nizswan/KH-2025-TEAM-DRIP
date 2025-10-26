@@ -4,8 +4,6 @@ import AttachFile from "../components/AttachFile";
 import Audio from "../components/Audio";
 import { useState } from "react";
 import { useRef, useEffect } from "react";
-import {useState} from "react";
-import {useRef, useEffect} from "react";
 import { summarizeText, summarizeAudio, summarizeTextProgressive, streamTextProgressive, tts as synthesizeTTS} from "../lib/api";
 
 
