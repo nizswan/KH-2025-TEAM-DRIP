@@ -1,6 +1,9 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
 import AttachFile from "../components/AttachFile";
+import Audio from "../components/Audio";
+import { useState } from "react";
+import { useRef, useEffect } from "react";
 import {useState} from "react";
 import {useRef, useEffect} from "react";
 import { summarizeText, summarizeAudio, summarizeTextProgressive, streamTextProgressive, tts as synthesizeTTS} from "../lib/api";
@@ -19,8 +22,8 @@ export default function CharacterPage() {
     };
 
     const handleClearFile = () => {
-    setSelectedFile(null);
-};
+        setSelectedFile(null);
+    };
     const [messages, setMsg] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -157,12 +160,12 @@ export default function CharacterPage() {
     };
 
     const messagesEndRef = useRef(null);
-    useEffect (() => {
+    useEffect(() => {
         messagesEndRef.current?.scrollTo({
             top: messagesEndRef.current.scrollHeight,
             behavior: "smooth",
         });
-    },[messages])
+    }, [messages])
 
     return (
         <div
@@ -174,7 +177,7 @@ export default function CharacterPage() {
             <div className="absolute inset-0 bg-black/30"></div>
 
             <div>
-                 <div className="absolute top-3 sm:top-4 md:top-6 left-3 sm:left-4 md:left-6 z-10">
+                <div className="absolute top-3 sm:top-4 md:top-6 left-3 sm:left-4 md:left-6 z-10">
                     <button
                         onClick={handleBack}
                         className="cursor-pointer bg-[#FFFFFF] text-[#000000] text-base px-4 py-1.5 rounded hover:bg-[#FFFFFF] hover:shadow-[0_0_30px_10px_#FFFFFF] transition-shadow duration-300 flex items-center"
@@ -201,9 +204,9 @@ export default function CharacterPage() {
                 <div className="overflow-hidden flex flex-col-reverse flex-1 w-full">
                     <div className="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesEndRef}>
                         {messages.map((m) => (
-                        <div key={m.id} className="flex justify-end" >
-                            <div className="bg-white w-3/4 text-black p-4 rounded self-end max-w-[65%]">{m.text} </div>
-                        </div>
+                            <div key={m.id} className="flex justify-end" >
+                                <div className="bg-white w-3/4 text-black p-4 rounded self-end max-w-[65%]">{m.text} </div>
+                            </div>
                         ))}
                     </div>
 
@@ -213,20 +216,21 @@ export default function CharacterPage() {
                             alt={name}
                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                         />
-                            <AttachFile
-                                onFileSelect={handleFileSelect}
-                                selectedFile={selectedFile}
-                                onClearFile={handleClearFile}
-                            />
-                            <ChatBubble
-                                onSend={handleSend}
-                                selectedFile={selectedFile}
-                                onClearFile={handleClearFile}
-                            />
-                        </div>
+                        <AttachFile
+                            onFileSelect={handleFileSelect}
+                            selectedFile={selectedFile}
+                            onClearFile={handleClearFile}
+                        />
+                        <ChatBubble
+                            onSend={handleSend}
+                            selectedFile={selectedFile}
+                            onClearFile={handleClearFile}
+                        />
+                        <Audio />
                     </div>
                 </div>
-                
             </div>
+
+        </div>
     );
 }

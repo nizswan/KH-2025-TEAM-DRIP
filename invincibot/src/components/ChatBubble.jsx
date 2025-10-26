@@ -61,7 +61,7 @@ export default function ChatBubble({ onSend, selectedFile, onClearFile }) {
                     />
                     {selectedFile && (
                         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-md text-black bg-blue-100 px-2 py-1 rounded flex items-center z-10">
-                             {selectedFile.name}
+                            {selectedFile.name}
                             <button
                                 type="button"
                                 onClick={onClearFile}
