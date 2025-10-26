@@ -10,12 +10,14 @@ import OmniManImgBackground from "../assets/img/OmniManBackground.png";
 export default function ChooseCharacter() {
   const navigate = useNavigate();
 
+  // array of each character's name, image, pronoun, and glow
   const characters = [
     { name: "Invincible", image: invincibleImg, pronoun: "his", styleClass: "invincible-glow"},
     { name: "Atom Eve", image: SamanthaImg, pronoun: "her", styleClass: "atom-eve-glow"},
     { name: "OmniMan", image: OmniManImg, pronoun: "his", styleClass: "omniman-glow" },
   ];
 
+  // array of each character's background image
   const characterBackground = [
     { name: "Invincible", image: invincibleImgBackground },
     { name: "Atom Eve", image: SamanthaImgBackground },

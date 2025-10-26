@@ -2,7 +2,7 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import ChatBubble from "../components/ChatBubble";
 import AttachFile from "../components/AttachFile";
 import Audio from "../components/Audio";
-import Send from "../components/Send";
+// import Send from "../components/Send";
 import { useState } from "react";
 import { useRef, useEffect } from "react";
 import { summarizeText, summarizeAudio, summarizeTextProgressive, streamTextProgressive, tts as synthesizeTTS} from "../lib/api";
@@ -20,9 +20,15 @@ export default function CharacterPage() {
         navigate('/ChooseCharacter');
     };
 
+    // file attachment handlers
     const handleClearFile = () => {
         setSelectedFile(null);
     };
+
+    const handleFileSelect = (file) => {
+        setSelectedFile(file);
+    };
+
     const [messages, setMsg] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -152,12 +158,6 @@ export default function CharacterPage() {
     })();
     };
 
-
-
-    const handleFileSelect = (file) => {
-        setSelectedFile(file);
-    };
-
     const messagesEndRef = useRef(null);
     useEffect(() => {
         messagesEndRef.current?.scrollTo({
@@ -222,7 +222,7 @@ export default function CharacterPage() {
                                 onClearFile={handleClearFile}
                             />
                             <Audio />
-                            <Send/>
+                            {/* <Send/> */}
                         </div>
 
                         <ChatBubble
