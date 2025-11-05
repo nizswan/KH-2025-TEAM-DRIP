@@ -1,4 +1,4 @@
-# Knight Hacks 2025 Team DRIP Submission -- Invincibot AI Web App Sumarizer
+# Knight Hacks 2025 Team DRIP Submission - Invincibot AI Web App Sumarizer
 
 Incorporates Elevenlabs, Facebook BART Model, Google Gemini API, and ReactJS to develop a superhero artificial intelligent summarizer that is multimodal; particularly summarizing text and audio with a capacity for text to speech use of these characters.
 
