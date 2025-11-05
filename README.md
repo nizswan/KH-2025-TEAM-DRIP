@@ -8,7 +8,7 @@ The chat's are not designed to answer questions, but rather to summarize text an
 
 We use elevenlabs text to speech api, with three unique voices.
 
-For audio usage we first use elevenlabs speech to text translator -> pass it through summarizer system -> output in both texts and desired character speech.
+For audio usage first we used elevenlabs speech to text translator -> then passed it through summarizer system -> output in both texts and desired character speech.
 
 Summarizer System:
 We use Facebook's BERT Summarizer as our default summarizer, after computing a few ablation studies with alternative large language models evaluating on the dataset CNN. The BERT model tended to perform nearly the best, and it was selected as it was the most optimal model in terms of local model usage. The BERT model summarizes all inputs to a pretty similar range of outputs regardless of input size, so we use agent to agent protocols to speak with google gemini to tell the BERT model what it missed out on the first batch of summarization. Since our application mimicks messages, we decide to send each subset of the summary in the intervals they are processed by the Summarizer System.
